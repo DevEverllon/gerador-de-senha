@@ -11,6 +11,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <link rel="stylesheet" href="style.css">
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
 <body>
@@ -18,7 +20,7 @@
         <!-- <img src="illustration.svg" alt=""> -->
         <i class="fa-solid fa-shield-halved" id="logo"></i>
 
-        <h1 id="title">Gerar Senha</h1>
+        <h1 id="title">Senha Segura</h1>
 
         <div id="password_conteiner">
             <span id="password">ola mundo</span>
@@ -36,7 +38,7 @@
             </div>
 
             <div class="item">
-                <input type="checkbox" name="include_uppcase" id="include_uppcase">
+                <input type="checkbox" name="include_uppcase" id="include_uppercase">
                 <label for="include_uppcase">Incluir letra maiúscula</label>
             </div>
 
@@ -58,6 +60,9 @@
             <button id="generate">Gerar Senha</button>
         </div>
     </div>
+
+    <script src="script.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </body>
 
 </html>
