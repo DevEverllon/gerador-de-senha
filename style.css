@@ -38,13 +38,16 @@ body{
 #password_conteiner{
     width: 100%;
     max-width: 400px;
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: center;
     background-color: var(--color-neutral2);
     color: var(--color-neutral1);
     padding: 8px 18px;
     border-radius: 8px;
+}
+#password_conteiner.show{
+    display: flex;
 }
 #password{
     font-size: 12pt;

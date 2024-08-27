@@ -1,5 +1,5 @@
 // PEGAR OS TIPOS DE CATACTERES QUE ESTÃO MARCADOS
-function analisar() {
+function getChartTypes() {
     const uppercase = document.querySelector('#include_uppercase').checked;
     const lowercase = document.querySelector('#include_lowercase').checked;
     const number = document.querySelector('#include_number').checked;
@@ -7,7 +7,7 @@ function analisar() {
 
     const charTypes = [];
 
-
+    // VERIFICAR O QUE TÁ MARCADO E COLOCANDO OS CARACTERES NO ARRAY
     if (uppercase == true) {
         charTypes.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
     }
@@ -21,25 +21,24 @@ function analisar() {
     }
 
     if (spacialCharecter == true) {
-        charTypes.push('!@#$%^&*()-_=+[]{}|;:",.<>?/\\');
+        charTypes.push('!@#$%^&*()-_=+[]{}|.<>?/\\');
     }
     return charTypes;
-
-
 }
 
-function tamanhoDaSenha() {
+// PEGANDO O TAMANHO DA SENHA - ATRAVÉS DO INPUT QUE O USER DIGITOU
+function getPasswordSize() {
     const size = document.querySelector('#size').value;
 
-    if (isNaN(size) || size < 6 || size > 128) {
-        mansage('Vefirique as informações!', '#dc2626')
+    // VALIDARÇÃO PRA VERIFICAR SE ELE É UM NUMERO, E DANDO UM VALOR MIN E MAX
+    if (isNaN(size) || size < 6 || size > 129) {
+        mansage('Digitte um número entre 6 e 129!', '#dc2626');
     }
-
 
     return size;
 }
 
-
+// GERANDO UM CARACTER ALEATORIO DOS VALORES DO ARRAY
 function randomCharType(charTypes) {
     const randomIndex = Math.floor(Math.random() * charTypes.length);
     charTypes[randomIndex];
@@ -47,17 +46,19 @@ function randomCharType(charTypes) {
     return charTypes[randomIndex][Math.floor(Math.random() * charTypes[randomIndex].length)];
 }
 
-
-function gerarSenhaAle(size, charTypes){
+// GERANDO A SENHA A PARTIR DO TAMANHO ESPECIFICO
+function generatePassword(size, charTypes) {
     let passwordGenarated = '';
 
-    while(passwordGenarated.length < size){
+    while (passwordGenarated.length < size) {
         passwordGenarated += randomCharType(charTypes);
     }
+
     return passwordGenarated;
 }
 
-function mansage(text, background){
+// MENSAGEM DE ERRO
+function mansage(text, background) {
     Toastify({
         text: text,
         duration: 3000,
@@ -68,14 +69,38 @@ function mansage(text, background){
     }).showToast();
 }
 
-
+// EXIBINDO SENHA ALEATORIA
 function gerarSenha() {
-    const size = tamanhoDaSenha();
-    const charTypes = analisar();
-    const passwordGenarated = gerarSenhaAle(size, charTypes);
+    const size = getPasswordSize();
+    const charTypes = getChartTypes();
+    
+    if(!size){
+        return;
+    }
+    
+    if(!charTypes.length){
+        mansage('Selecione pelo menos um tipo de caractere!', '#dc2626')
+        return;
+    }
+
+    // GERANDO A SENHA
+    const passwordGenarated = generatePassword(size, charTypes);
+
+    // ADICIONANDO CLASSE SHOW NO #password_conteiner
+    document.querySelector('#password_conteiner').classList.add('show');
 
     document.querySelector('#password').textContent = passwordGenarated;
 }
-
 const btnGerar = document.querySelector('#generate');
-btnGerar.addEventListener('click', gerarSenha); 
+btnGerar.addEventListener('click', gerarSenha);
+
+
+// COPIAR PARA A ÁREA DE TRANSFERÊNCIA
+function copyPassword(){
+    const copyBtn = document.querySelector('#copy');
+    
+    navigator.clipboard.writeText(document.querySelector('#password').textContent);
+    mansage('Senha copiada com sucesso!', '#8bc34a');
+}
+const copyBtn2 = document.querySelector('#copy');
+copyBtn2.addEventListener('click', copyPassword);
